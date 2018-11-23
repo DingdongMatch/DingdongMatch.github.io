@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="傅大帅的个人博客">
+  <meta name="keywords" content="火柴">
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+    
+  <title>Python网络爬虫（二）——问题与规则 | 叮咚火柴的博客</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class="logo" href="/">
+      <span>叮咚火柴的博客</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id="post">
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>Python网络爬虫（二）——问题与规则</h1>
+          <div class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2017年05月11日</time>
+            
+            
+              | 
+                  <i class="fa fa-tag" aria-hidden="true"></i>
+                
+               
+  <a href="/tags/#学习笔记" class="tag">学习笔记</a>
+
+
+            
+          </div>
+          <h1 id="网络爬虫引发的问题"><a href="#网络爬虫引发的问题" class="headerlink" title="网络爬虫引发的问题"></a>网络爬虫引发的问题</h1><h2 id="网络爬虫的尺寸"><a href="#网络爬虫的尺寸" class="headerlink" title="网络爬虫的尺寸"></a>网络爬虫的尺寸</h2><p><img src="http://i.imgur.com/fPfPpNb.png" alt="image"></p>
+<h2 id="网络爬虫的“性能骚扰”"><a href="#网络爬虫的“性能骚扰”" class="headerlink" title="网络爬虫的“性能骚扰”"></a>网络爬虫的“性能骚扰”</h2><p>Web服务器默认接收人类访问<br>受限于编写水平和目的，网络爬虫将会为Web服务器带来巨大的资源开销</p>
+<h2 id="网络爬虫的法律风险"><a href="#网络爬虫的法律风险" class="headerlink" title="网络爬虫的法律风险"></a>网络爬虫的法律风险</h2><p>服务器上的数据有产权归属<br>网络爬虫获取数据后牟利将带来法律风险</p>
+<h2 id="网络爬虫的隐私泄露"><a href="#网络爬虫的隐私泄露" class="headerlink" title="网络爬虫的隐私泄露"></a>网络爬虫的隐私泄露</h2><p>网络爬虫可能具备突破简单访问控制的能力，获得被保护数据从而泄露个人隐私</p>
+<h2 id="网络爬虫的限制"><a href="#网络爬虫的限制" class="headerlink" title="网络爬虫的限制"></a>网络爬虫的限制</h2><p>来源审查：判断User‐Agent进行限制</p>
+<ul>
+<li>检查来访HTTP协议头的User‐Agent域，只响应浏览器或友好爬虫的访问<br>发布公告：Robots协议</li>
+<li>告知所有爬虫网站的爬取策略，要求爬虫遵守<h1 id="Robots协议"><a href="#Robots协议" class="headerlink" title="Robots协议"></a>Robots协议</h1>Robots Exclusion Standard，网络爬虫排除标准<br>作用：网站告知网络爬虫哪些页面可以抓取，哪些不行<br>形式：在网站根目录下的robots.txt文件<br>Robots协议基本语法<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 注释，*代表所有，/代表根目录</span><br><span class="line">User‐agent: *</span><br><span class="line">Disallow: /</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>案例：京东的Robots协议（<a href="https://www.jd.com/robots.txt）" target="_blank" rel="noopener">https://www.jd.com/robots.txt）</a><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">User‐agent: *</span><br><span class="line">Disallow: /?*</span><br><span class="line">Disallow: /pop/*.html</span><br><span class="line">Disallow: /pinpai/*.html?*</span><br><span class="line">User‐agent: EtaoSpider</span><br><span class="line">Disallow: /</span><br><span class="line">User‐agent: HuihuiSpider</span><br><span class="line">Disallow: /</span><br><span class="line">User‐agent: GwdangSpider</span><br><span class="line">Disallow: /</span><br><span class="line">User‐agent: WochachaSpider</span><br><span class="line">Disallow: /</span><br></pre></td></tr></table></figure></p>
+<h1 id="Robots协议的遵守方式"><a href="#Robots协议的遵守方式" class="headerlink" title="Robots协议的遵守方式"></a>Robots协议的遵守方式</h1><h2 id="Robots协议的使用"><a href="#Robots协议的使用" class="headerlink" title="Robots协议的使用"></a>Robots协议的使用</h2><p>网络爬虫：自动或人工识别robots.txt，再进行内容爬取<br>约束性：Robots协议是建议但非约束性，网络爬虫可以不遵守，但存在法律风险</p>
+<h2 id="对Robots协议的理解"><a href="#对Robots协议的理解" class="headerlink" title="对Robots协议的理解"></a>对Robots协议的理解</h2><p><img src="http://i.imgur.com/fsEQhqF.png" alt="image"></p>
+
+        </section>
+    </article>
+    
+        <!-- disqus 评论框 start -->
+        <div class="comment">
+            <div id="disqus_thread" class="disqus-thread">
+              <i>加载评论框需要翻墙</i>
+            </div>
+        </div>
+        <!-- disqus 评论框 end -->
+    
+    
+        <!-- livere 评论框 start -->
+        <div class="comment">
+            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
+        </div>
+        <!-- livere 评论框 end -->
+        
+  </div>
+  <aside>
+    
+    <div class="toc-container">
+        <h1>目录</h1>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络爬虫引发的问题"><span class="toc-number">1.</span> <span class="toc-text">网络爬虫引发的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的尺寸"><span class="toc-number">1.1.</span> <span class="toc-text">网络爬虫的尺寸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的“性能骚扰”"><span class="toc-number">1.2.</span> <span class="toc-text">网络爬虫的“性能骚扰”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的法律风险"><span class="toc-number">1.3.</span> <span class="toc-text">网络爬虫的法律风险</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的隐私泄露"><span class="toc-number">1.4.</span> <span class="toc-text">网络爬虫的隐私泄露</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络爬虫的限制"><span class="toc-number">1.5.</span> <span class="toc-text">网络爬虫的限制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Robots协议"><span class="toc-number">2.</span> <span class="toc-text">Robots协议</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Robots协议的遵守方式"><span class="toc-number">3.</span> <span class="toc-text">Robots协议的遵守方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Robots协议的使用"><span class="toc-number">3.1.</span> <span class="toc-text">Robots协议的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对Robots协议的理解"><span class="toc-number">3.2.</span> <span class="toc-text">对Robots协议的理解</span></a></li></ol></li></ol>
+        </div>
+    </div>
+    
+  </aside>
+</main>
+
+<!-- disqus 公共JS代码 -->
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = "dingdongmatch";
+  var disqus_identifier = "http://yoursite.com/2017/05/11/Python网络爬虫（二）——问题与规则/";
+  var disqus_url = "http://yoursite.com/2017/05/11/Python网络爬虫（二）——问题与规则/";
+
+  isAgent(getDisqus)
+
+  // determine user agent in China
+  function isAgent(cb) {
+    var url = '//graph.facebook.com/feed?callback=h';
+    var xhr = new XMLHttpRequest();
+    var called = false;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+      called = true;
+      cb(true);
+      }
+    };
+    xhr.send();
+    // timeout 1s, this facebook API is very fast.
+    setTimeout(function() {
+      if (!called) {
+      xhr.abort();
+      cb(false)
+      }
+    }, 1000);
+  }
+
+  function getDisqus(isAgent) {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
+    dsq.async = true
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
+  }
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+<script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2018 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>

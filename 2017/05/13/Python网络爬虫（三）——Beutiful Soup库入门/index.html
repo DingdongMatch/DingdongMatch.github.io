@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="傅大帅的个人博客">
+  <meta name="keywords" content="火柴">
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+    
+  <title>Python网络爬虫（三）——Beutiful Soup库入门 | 叮咚火柴的博客</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class="logo" href="/">
+      <span>叮咚火柴的博客</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id="post">
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>Python网络爬虫（三）——Beutiful Soup库入门</h1>
+          <div class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2017年05月13日</time>
+            
+            
+              | 
+                  <i class="fa fa-tag" aria-hidden="true"></i>
+                
+               
+  <a href="/tags/#学习笔记" class="tag">学习笔记</a>
+
+
+            
+          </div>
+          <h1 id="Beautiful-Soup库"><a href="#Beautiful-Soup库" class="headerlink" title="Beautiful Soup库"></a>Beautiful Soup库</h1><h2 id="Beautiful-Soup库的理解"><a href="#Beautiful-Soup库的理解" class="headerlink" title="Beautiful Soup库的理解"></a>Beautiful Soup库的理解</h2><p><img src="http://i.imgur.com/dTZ6Tj6.png" alt="image"><br>Beautiful Soup库是解析、遍历、维护“标签树”的功能库<br><img src="http://i.imgur.com/kt7od7j.png" alt="image"></p>
+<h2 id="Beautiful-Soup库的引用"><a href="#Beautiful-Soup库的引用" class="headerlink" title="Beautiful Soup库的引用"></a>Beautiful Soup库的引用</h2><p>Beautiful Soup库，也叫beautifulsoup4 或bs4<br>约定引用方式如下，即主要是用BeautifulSoup类<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import bs4</span><br></pre></td></tr></table></figure></p>
+<h2 id="BeautifulSoup类"><a href="#BeautifulSoup类" class="headerlink" title="BeautifulSoup类"></a>BeautifulSoup类</h2><p><img src="http://i.imgur.com/050m12Z.png" alt="image"><br>BeautifulSoup对应一个HTML/XML文档的全部内容</p>
+<h2 id="Beautiful-Soup库解析器"><a href="#Beautiful-Soup库解析器" class="headerlink" title="Beautiful Soup库解析器"></a>Beautiful Soup库解析器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">soup = BeautifulSoup(&apos;&lt;html&gt;data&lt;html&gt;&apos;，&apos;html.parser&apos;)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>解析器</th>
+<th>使用方法</th>
+<th>条件 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bs4的HTML解析器</td>
+<td>BeautifulSoup(mk,’html.parser’)</td>
+<td>安装bs4库</td>
+</tr>
+<tr>
+<td>lxml的HTML解析器</td>
+<td>BeautifulSoup(mk,’lxml’)</td>
+<td>pip install lxml</td>
+</tr>
+<tr>
+<td>lxml的XML解析器</td>
+<td>BeautifulSoup(mk,’xml’)</td>
+<td>pip install lxml</td>
+</tr>
+<tr>
+<td>html5lib的解析器</td>
+<td>BeautifulSoup(mk,’html5lib’)</td>
+<td>pip install html5lib</td>
+</tr>
+</tbody>
+</table>
+<h2 id="BeautifulSoup类的基本元素"><a href="#BeautifulSoup类的基本元素" class="headerlink" title="BeautifulSoup类的基本元素"></a>BeautifulSoup类的基本元素</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p class=“title”&gt; … &lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>基本元素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tag</td>
+<td>标签，最基本的信息组织单元，分别用&lt;&gt;和&lt;/&gt;标明开头和结尾</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>标签的名字，\<p>…\</p>的名字是’p’，格式：\<tag>.name</tag></td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>标签的属性，字典形式组织，格式：\<tag>.attrs</tag></td>
+</tr>
+<tr>
+<td>NavigableString</td>
+<td>标签内非属性字符串，\&lt;&gt;…\&lt;/&gt;中字符串，格式：\<tag>.string</tag></td>
+</tr>
+<tr>
+<td>Comment</td>
+<td>标签内字符串的注释部分，一种特殊的Comment类型</td>
+</tr>
+</tbody>
+</table>
+<p>Tag标签<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests</span><br><span class="line">&gt;&gt;&gt; r = requests.get(&quot;http://python123.io/ws/demo.html&quot;)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&gt;&gt;&gt; demo = r.text</span><br><span class="line">&gt;&gt;&gt; from bs4 import BeautifulSoup</span><br><span class="line">&gt;&gt;&gt; soup = BeautifulSoup(demo,&apos;html.parser&apos;)</span><br><span class="line">&gt;&gt;&gt; print(soup.prettify())</span><br><span class="line">&gt;&gt;&gt; soup.title</span><br><span class="line">&lt;title&gt;This is a python demo page&lt;/title&gt;</span><br><span class="line">&gt;&gt;&gt; soup.a</span><br><span class="line">&lt;a class=&quot;py1&quot; href=&quot;http://www.icourse163.org/course/BIT-268001&quot; id=&quot;link1&quot;&gt;Basic Python&lt;/a&gt;</span><br></pre></td></tr></table></figure></p>
+<p>任何存在于HTML语法中的标签都可以用soup.访问获得<br>当HTML文档中存在多个相同对应内容时，soup.返回第一个<br>Tag的name（名字）<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; soup.a.name</span><br><span class="line">&apos;a&apos;</span><br><span class="line">&gt;&gt;&gt; soup.a.parent.name</span><br><span class="line">&apos;p&apos;</span><br></pre></td></tr></table></figure></p>
+<p>每个都有自己的名字，通过.name获取，字符串类型<br>Tag的attrs（属性）<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; tag = soup.a</span><br><span class="line">&gt;&gt;&gt; tag.attrs</span><br><span class="line">&#123;&apos;href&apos;: &apos;http://www.icourse163.org/course/BIT-268001&apos;, &apos;class&apos;: [&apos;py1&apos;], &apos;id&apos;: &apos;link1&apos;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一个可以有0或多个属性，字典类型<br>Tag的NavigableString<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; soup.a.string</span><br><span class="line">&apos;Basic Python&apos;</span><br><span class="line">&gt;&gt;&gt; soup.p.string</span><br><span class="line">&apos;The demo python introduces several python courses.&apos;</span><br><span class="line">&gt;&gt;&gt; type(soup.p.string)</span><br></pre></td></tr></table></figure></p>
+<p>NavigableString可以跨越多个层次<br>Tag的Comment<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; newsoup = BeautifulSoup(&quot;&lt;b&gt;&lt;!--This is a comment--&gt;&lt;/b&gt;&lt;p&gt;This is not a comment&lt;/p&gt;&quot;,&quot;html.parser&quot;)</span><br><span class="line">&gt;&gt;&gt; newsoup.b.string</span><br><span class="line">&apos;This is a comment&apos;</span><br><span class="line">&gt;&gt;&gt; type(newsoup.b.string)</span><br><span class="line">&lt;class &apos;bs4.element.Comment&apos;&gt;</span><br><span class="line">&gt;&gt;&gt; newsoup.p.string</span><br><span class="line">&apos;This is not a comment&apos;</span><br><span class="line">&gt;&gt;&gt; type(newsoup.p.string)</span><br><span class="line">&lt;class &apos;bs4.element.NavigableString&apos;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Comment是一种特殊类型</p>
+<h1 id="基于bs4库的HTML内容遍历方法"><a href="#基于bs4库的HTML内容遍历方法" class="headerlink" title="基于bs4库的HTML内容遍历方法"></a>基于bs4库的HTML内容遍历方法</h1><h2 id="HTML基本格式"><a href="#HTML基本格式" class="headerlink" title="HTML基本格式"></a>HTML基本格式</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;This is a python demo page&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;p class=&quot;title&quot;&gt;</span><br><span class="line">            &lt;b&gt;The demo python introduces several python courses.&lt;/b&gt;</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">        &lt;p class=“course”&gt;Python is a wonderful general‐purpose programming language.</span><br><span class="line">    You can learn Python from novice to professional by tracking the following courses:</span><br><span class="line">            &lt;a href=&quot;http://www.icourse163.org/course/BIT‐268001&quot; class=&quot;py1&quot;</span><br><span class="line">    id=&quot;link1&quot;&gt;Basic Python&lt;/a&gt; and</span><br><span class="line">            &lt;a href=&quot;http://www.icourse163.org/course/BIT‐1001870001&quot; class=&quot;py2&quot;</span><br><span class="line">    id=&quot;link2&quot;&gt;Advanced Python&lt;/a&gt;.</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/D4Vb2u4.png" alt="image"><br>&lt;&gt;…&lt;/&gt;构成了所属关系，形成了标签的树形结构</p>
+<h2 id="标签树的下行遍历"><a href="#标签树的下行遍历" class="headerlink" title="标签树的下行遍历"></a>标签树的下行遍历</h2><p>BeautifulSoup类型是标签树的根节点</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.contents</td>
+<td>子节点的列表，将<tag>所有儿子节点存入列表</tag></td>
+</tr>
+<tr>
+<td>.children</td>
+<td>子节点的迭代类型，与.contents类似，用于循环遍历儿子节点</td>
+</tr>
+<tr>
+<td>.descendants</td>
+<td>子孙节点的迭代类型，包含所有子孙节点，用于循环遍历</td>
+</tr>
+</tbody>
+</table>
+<p>遍历儿子节点：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for child in soup.body.children:</span><br><span class="line">print(child)</span><br></pre></td></tr></table></figure></p>
+<p>遍历子孙节点：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for child in soup.body.descendants:</span><br><span class="line">print(child)</span><br></pre></td></tr></table></figure></p>
+<h2 id="标签树的上行遍历"><a href="#标签树的上行遍历" class="headerlink" title="标签树的上行遍历"></a>标签树的上行遍历</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> .parent</td>
+<td>节点的父亲标签 </td>
+</tr>
+<tr>
+<td> .parents</td>
+<td>节点先辈标签的迭代类型，用于循环遍历先辈节点</td>
+</tr>
+</tbody>
+</table>
+<p> 遍历所有先辈节点，包括soup本身，所以要区别判断：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; for parent in soup.a.parents:</span><br><span class="line">    if parent is None:</span><br><span class="line">        print(parent)</span><br><span class="line">    else:</span><br><span class="line">        print(parent.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p</span><br><span class="line">body</span><br><span class="line">html</span><br><span class="line">[document]</span><br></pre></td></tr></table></figure></p>
+<h2 id="标签树的平行遍历"><a href="#标签树的平行遍历" class="headerlink" title="标签树的平行遍历"></a>标签树的平行遍历</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.next_sibling</td>
+<td>返回按照HTML文本顺序的下一个平行节点标签</td>
+</tr>
+<tr>
+<td>.previous_sibling</td>
+<td>返回按照HTML文本顺序的上一个平行节点标签</td>
+</tr>
+<tr>
+<td>.next_siblings</td>
+<td>迭代类型，返回按照HTML文本顺序的后续所有平行节点标签</td>
+</tr>
+<tr>
+<td>.previous_siblings</td>
+<td>迭代类型，返回按照HTML文本顺序的前续所有平行节点标签</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://i.imgur.com/CaUq9PG.png" alt="image"></p>
+<center>平行遍历发生在同一个父节点下的各节点间</center>
+
+<p>遍历后续节点<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for sibling in soup.a.next_sibling:</span><br><span class="line">    print(sibling)</span><br></pre></td></tr></table></figure></p>
+<p>遍历前续节点<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for sibling in soup.a.previous_sibling:</span><br><span class="line">    print(sibling)</span><br></pre></td></tr></table></figure></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p><img src="http://i.imgur.com/dAsK0td.png" alt="image"></p>
+<h1 id="基于bs4库的HTML格式输出"><a href="#基于bs4库的HTML格式输出" class="headerlink" title="基于bs4库的HTML格式输出"></a>基于bs4库的HTML格式输出</h1><h2 id="bs4库的prettify-方法"><a href="#bs4库的prettify-方法" class="headerlink" title="bs4库的prettify()方法"></a>bs4库的prettify()方法</h2><p><img src="http://i.imgur.com/CYC7O4L.png" alt="image"></p>
+<p>.prettify()为HTML文本&lt;&gt;及其内容增加更加’\n’<br>.prettify()可用于标签，方法：.prettify()</p>
+<p><img src="http://i.imgur.com/OTuxTLo.png" alt="image"></p>
+<h2 id="bs4库的编码"><a href="#bs4库的编码" class="headerlink" title="bs4库的编码"></a>bs4库的编码</h2><p>bs4库将任何HTML输入都变成utf‐8编码<br>Python 3.x默认支持编码是utf‐8,解析无障碍</p>
+<p><img src="http://i.imgur.com/OB9eWST.png" alt="image"></p>
+
+        </section>
+    </article>
+    
+        <!-- disqus 评论框 start -->
+        <div class="comment">
+            <div id="disqus_thread" class="disqus-thread">
+              <i>加载评论框需要翻墙</i>
+            </div>
+        </div>
+        <!-- disqus 评论框 end -->
+    
+    
+        <!-- livere 评论框 start -->
+        <div class="comment">
+            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
+        </div>
+        <!-- livere 评论框 end -->
+        
+  </div>
+  <aside>
+    
+    <div class="toc-container">
+        <h1>目录</h1>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Beautiful-Soup库"><span class="toc-number">1.</span> <span class="toc-text">Beautiful Soup库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Beautiful-Soup库的理解"><span class="toc-number">1.1.</span> <span class="toc-text">Beautiful Soup库的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Beautiful-Soup库的引用"><span class="toc-number">1.2.</span> <span class="toc-text">Beautiful Soup库的引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BeautifulSoup类"><span class="toc-number">1.3.</span> <span class="toc-text">BeautifulSoup类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Beautiful-Soup库解析器"><span class="toc-number">1.4.</span> <span class="toc-text">Beautiful Soup库解析器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BeautifulSoup类的基本元素"><span class="toc-number">1.5.</span> <span class="toc-text">BeautifulSoup类的基本元素</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于bs4库的HTML内容遍历方法"><span class="toc-number">2.</span> <span class="toc-text">基于bs4库的HTML内容遍历方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML基本格式"><span class="toc-number">2.1.</span> <span class="toc-text">HTML基本格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签树的下行遍历"><span class="toc-number">2.2.</span> <span class="toc-text">标签树的下行遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签树的上行遍历"><span class="toc-number">2.3.</span> <span class="toc-text">标签树的上行遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签树的平行遍历"><span class="toc-number">2.4.</span> <span class="toc-text">标签树的平行遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">2.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于bs4库的HTML格式输出"><span class="toc-number">3.</span> <span class="toc-text">基于bs4库的HTML格式输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#bs4库的prettify-方法"><span class="toc-number">3.1.</span> <span class="toc-text">bs4库的prettify()方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bs4库的编码"><span class="toc-number">3.2.</span> <span class="toc-text">bs4库的编码</span></a></li></ol></li></ol>
+        </div>
+    </div>
+    
+  </aside>
+</main>
+
+<!-- disqus 公共JS代码 -->
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = "dingdongmatch";
+  var disqus_identifier = "http://yoursite.com/2017/05/13/Python网络爬虫（三）——Beutiful Soup库入门/";
+  var disqus_url = "http://yoursite.com/2017/05/13/Python网络爬虫（三）——Beutiful Soup库入门/";
+
+  isAgent(getDisqus)
+
+  // determine user agent in China
+  function isAgent(cb) {
+    var url = '//graph.facebook.com/feed?callback=h';
+    var xhr = new XMLHttpRequest();
+    var called = false;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+      called = true;
+      cb(true);
+      }
+    };
+    xhr.send();
+    // timeout 1s, this facebook API is very fast.
+    setTimeout(function() {
+      if (!called) {
+      xhr.abort();
+      cb(false)
+      }
+    }, 1000);
+  }
+
+  function getDisqus(isAgent) {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
+    dsq.async = true
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
+  }
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+<script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2018 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>

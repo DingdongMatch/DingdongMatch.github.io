@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="傅大帅的个人博客">
+  <meta name="keywords" content="火柴">
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+    
+  <title>数据结构——基本概念 | 叮咚火柴的博客</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class="logo" href="/">
+      <span>叮咚火柴的博客</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id="post">
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>数据结构——基本概念</h1>
+          <div class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2017年05月01日</time>
+            
+            
+              | 
+                  <i class="fa fa-tags" aria-hidden="true"></i>
+                
+               
+  <a href="/tags/#学习笔记" class="tag">学习笔记</a>
+
+  <a href="/tags/#数据结构" class="tag">数据结构</a>
+
+
+            
+          </div>
+          <h1 id="什么是数据结构"><a href="#什么是数据结构" class="headerlink" title="什么是数据结构"></a>什么是数据结构</h1><h2 id="常见解释"><a href="#常见解释" class="headerlink" title="常见解释"></a>常见解释</h2><p>数据结构是数据对象，以及存在于该对象的实例和组成实例的数据元素之间的各种联系。这些联系可以通过定义相关的函数来给出。<br>数据结构是ADT（抽象数据类型 Abstract DataType）的物理实现。<br>数据结构（data structure）是计算机中存储、组织数据的方式。通常情况下，精心选择的数据结构可以带来最优效率的算法。<br>例1：图书馆放书存在的问题：    操作1：新书怎么插入？    操作2：怎么找到某本指定的书？<br>此例说明:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">解决问题方法的效率，</span><br><span class="line">跟数据的组织方式有关</span><br></pre></td></tr></table></figure></p>
+<p>例2：写程序实现一个函数PrintN，使得传入一个正整数为N的参数后，能顺序打印从1到N的全部正整数    递归和循环实现递归效率低<br>此例说明:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">解决问题方法的效率，</span><br><span class="line">跟空间的利用效率有关</span><br></pre></td></tr></table></figure></p>
+<p>例3：写程序计算给定多项式在给定点x处的值    算法不同时间复杂度不同<br>此例说明:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">解决问题方法的效率，</span><br><span class="line">跟算法的巧妙程度有关</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据结构定义"><a href="#数据结构定义" class="headerlink" title="数据结构定义"></a>数据结构定义</h2><ul>
+<li>数据对象在计算机中的组成形式  逻辑结构  物理存储结构</li>
+<li>数据对象必定与一系列加在其上的操作相关联</li>
+<li>完成这些操作所用的方法就是算法<h2 id="抽象数据类型（Abstract-Data-Type）"><a href="#抽象数据类型（Abstract-Data-Type）" class="headerlink" title="抽象数据类型（Abstract Data Type）"></a>抽象数据类型（Abstract Data Type）</h2>数据类型</li>
+<li>数据对象集</li>
+<li>数据集合相关联的操作集<br>抽象：描述数据类型的方法不依赖于具体实现</li>
+<li>与存储机器无关</li>
+<li>与数据存储的物理结构无关</li>
+<li>与实现操作的算法和编程语言均无关<br>优点：只描述数据对象集和相关操作集“是什么”，并不涉及“如何做到”的问题。<h1 id="什么是算法"><a href="#什么是算法" class="headerlink" title="什么是算法"></a>什么是算法</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2>算法（Algorithm）</li>
+<li>一个有限指令集</li>
+<li>接受一些输入（有些情况下不需要输入）</li>
+<li>产生输出</li>
+<li>一定在有限步骤之后终止</li>
+<li>每一条指令必须</li>
+<li>有充分明确的目标，不可以有歧义</li>
+<li>计算机能处理的范围之内</li>
+<li>描述应不依赖于任何一种计算机语言以及具体的实现手段<h2 id="什么是好的算法？"><a href="#什么是好的算法？" class="headerlink" title="什么是好的算法？"></a>什么是好的算法？</h2></li>
+<li>空间复杂度S(n) —— 根据算法写成的程序在执行时占用存储单元的长度。这个长度往往与输入数据的规模有关。空间复杂度过高的算法可能导致使用的内存超限，造成程序非正常中断。</li>
+<li>时间复杂度T(n) —— 根据算法写成的程序在执行时耗费时间的长度。这个长度往往也与输入数据的规模有关。时间复杂度过高的低效算法可能导致我们在有生之年都等不到运行结果。<h2 id="复杂度分析小窍门"><a href="#复杂度分析小窍门" class="headerlink" title="复杂度分析小窍门"></a>复杂度分析小窍门</h2>若两段算法分别有复杂度T1(n)=O(f1(n))和T2(n)=O(f2(n))，则</li>
+<li>T1(n)+T2(n)=max(O(f1(n)),O(f2(n)))</li>
+<li>T1(n)xT2(n)=O( f1(n)xf2(n))<br>若T(n)是关于n的k阶多项式，那么T(n)=Θ(nk)。<br>一个for循环的时间复杂度等于循环次数乘以循环体代码的复杂度。<br>if-else 结构的复杂度取决于if的条件判断复杂度和两个分枝部分的复杂度，总体复杂度取三者中最大。</li>
+</ul>
+
+        </section>
+    </article>
+    
+        <!-- disqus 评论框 start -->
+        <div class="comment">
+            <div id="disqus_thread" class="disqus-thread">
+              <i>加载评论框需要翻墙</i>
+            </div>
+        </div>
+        <!-- disqus 评论框 end -->
+    
+    
+        <!-- livere 评论框 start -->
+        <div class="comment">
+            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
+        </div>
+        <!-- livere 评论框 end -->
+        
+  </div>
+  <aside>
+    
+    <div class="toc-container">
+        <h1>目录</h1>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是数据结构"><span class="toc-number">1.</span> <span class="toc-text">什么是数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见解释"><span class="toc-number">1.1.</span> <span class="toc-text">常见解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构定义"><span class="toc-number">1.2.</span> <span class="toc-text">数据结构定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象数据类型（Abstract-Data-Type）"><span class="toc-number">1.3.</span> <span class="toc-text">抽象数据类型（Abstract Data Type）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是算法"><span class="toc-number">2.</span> <span class="toc-text">什么是算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是好的算法？"><span class="toc-number">2.2.</span> <span class="toc-text">什么是好的算法？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂度分析小窍门"><span class="toc-number">2.3.</span> <span class="toc-text">复杂度分析小窍门</span></a></li></ol></li></ol>
+        </div>
+    </div>
+    
+  </aside>
+</main>
+
+<!-- disqus 公共JS代码 -->
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = "dingdongmatch";
+  var disqus_identifier = "http://yoursite.com/2017/05/01/数据结构——基本概念/";
+  var disqus_url = "http://yoursite.com/2017/05/01/数据结构——基本概念/";
+
+  isAgent(getDisqus)
+
+  // determine user agent in China
+  function isAgent(cb) {
+    var url = '//graph.facebook.com/feed?callback=h';
+    var xhr = new XMLHttpRequest();
+    var called = false;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+      called = true;
+      cb(true);
+      }
+    };
+    xhr.send();
+    // timeout 1s, this facebook API is very fast.
+    setTimeout(function() {
+      if (!called) {
+      xhr.abort();
+      cb(false)
+      }
+    }, 1000);
+  }
+
+  function getDisqus(isAgent) {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
+    dsq.async = true
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
+  }
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+<script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2018 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>

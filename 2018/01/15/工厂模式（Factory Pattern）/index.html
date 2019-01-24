@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="傅大帅的个人博客">
+  <meta name="keywords" content="火柴">
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+    
+  <title>工厂模式（Factory Pattern） | 叮咚火柴的博客</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class="logo" href="/">
+      <span>叮咚火柴的博客</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id="post">
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>工厂模式（Factory Pattern）</h1>
+          <div class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018年01月15日</time>
+            
+            
+              | 
+                  <i class="fa fa-tags" aria-hidden="true"></i>
+                
+               
+  <a href="/tags/#学习笔记" class="tag">学习笔记</a>
+
+  <a href="/tags/#设计模式" class="tag">设计模式</a>
+
+
+            
+          </div>
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>工厂模式（Factory Pattern）是Java中最常用的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。<br><br>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。建立一个工厂来创建对象,你可以轻松方便地构造对象实例，而不必关心构造对象实例的细节和复杂过程<br></p>
+<ol>
+<li>还没有工厂时代：假如还没有工厂，如果一个客户要一辆车,做法是客户去创建一辆车，然后拿来用。当然通过接口客户可以创建不同的车，比如奥迪，比亚迪，奔驰。</li>
+<li>简单工厂模式时代：有了工厂之后，用户不用去自己创建汽车，由一个工厂来帮他创建汽车想要什么车，这个工厂就可以建。比如：想要奥迪，工厂就创建奥迪；想要比亚迪，工厂就创建比亚迪；想要奔驰，工厂就创建奔驰。即所有品牌的车都由一个工厂创建。</li>
+<li>工厂方法模式时代：随着工厂及客户需求的壮大，生产的车的品牌越来越多，比如，又加了保时捷，法拉利等品牌。这时在同一个工厂生产这些车十分的麻烦，于是由单独分出来多个具体的工厂，只生产一种品牌的车。每个具体工厂创建一种品牌的车，即具体工厂类只能创建一个具体产品。但是原先生产车的那个工厂是个抽象，需要指定某个具体的工厂才能生产出相应品牌的车。</li>
+<li>抽象工厂模式时代：还是来谈谈车，在每个品牌的车中都分高配和低配，高配的车引擎，座椅，轮胎方面都有别于低配。这时工厂要生产这两种类型的车，每种类型的车必须使用对应的引擎，座椅，轮胎，如：高配的车必须使用高级的引擎，高级的座椅，高级的轮胎；低配的车使用低级的引擎，低级的座椅，低级的轮胎。这时候生产某个品牌的车的工厂又分出了两个工厂，分别用于生产高配的车，和低配的车。</li>
+</ol>
+<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>工厂模式可以分为三类： </p>
+<ol>
+<li>简单工厂模式（Simple Factory） </li>
+<li>工厂方法模式（Factory Method） </li>
+<li>抽象工厂模式（Abstract Factory）</li>
+</ol>
+<p>三种模式从上到下逐步抽象，并且更具一般性。<br><br>GOF在《设计模式》一书中将工厂模式分为两类：工厂方法模式（Factory Method）与抽象工厂模式（Abstract Factory）。将简单工厂模式（Simple Factory）看为工厂方法模式的一种特例，两者归为一类。<br></p>
+<h1 id="三种模式的具体实现"><a href="#三种模式的具体实现" class="headerlink" title="三种模式的具体实现"></a>三种模式的具体实现</h1><h2 id="简单工厂模式（Simple-Factory）"><a href="#简单工厂模式（Simple-Factory）" class="headerlink" title="简单工厂模式（Simple Factory）"></a>简单工厂模式（Simple Factory）</h2><ul>
+<li>简单工厂模式又称静态工厂方法模式，因为工厂类中的方法是静态方法，前面加有static。</li>
+<li>简单工厂模式提供了三种实现方式，其中第三种方式采用反射实现解决了前两种方式——每次增加一个产品时，都需要增加一个具体类和对象实现工厂（在工厂中需追加代码来实例化追加类所对应的对象），这一缺点。</li>
+</ul>
+<p>备注：<br><br>静态方法与普通方法的区别：<br><br><strong>static方法可以通过类名访问，也可以通过类的实例访问。</strong><br><br><strong>static方法不能访问类中非static的数据。</strong><br><br>比如:<br></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">    static void F()&#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在main函数中可以<br><br>A a;<br><br>a.F();<br><br>也可以<br><br>A.F<br><br><strong>普通方法又叫实例方法，只能通过类的实例访问。</strong><br><br>他只能a.F();<br></p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><img src="/images/factory/1.png" alt=""></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>产品接口：</p>
+<ul>
+<li>抽象产品角色：它一般是具体产品继承的父类或者实现的接口。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public interface Car</span><br><span class="line">&#123;</span><br><span class="line">    void run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体产品类：</p>
+<ul>
+<li>具体产品角色：工厂类所创建的对象就是此角色的实例。在java中由一个具体类实现。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//奥迪</span><br><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class Audi implements Car</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;奥迪出发&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//奔驰</span><br><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class Benz implements Car</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;奔驰出发&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//比亚迪</span><br><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class Byd implements Car</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;比亚迪出发&quot;);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>三种工厂类：</p>
+<ul>
+<li>工厂类角色：这是本模式的核心，含有一定的商业逻辑和判断逻辑。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//工厂1</span><br><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class CarFactory1</span><br><span class="line">&#123;</span><br><span class="line">	public static Car createCar(String Type)</span><br><span class="line">	&#123;</span><br><span class="line">		if(&quot;Audi&quot;.equals(Type))</span><br><span class="line">		&#123;</span><br><span class="line">			return new Audi();</span><br><span class="line">		&#125;</span><br><span class="line">		else if(&quot;Byd&quot;.equals(Type))</span><br><span class="line">		&#123;</span><br><span class="line">			return new Byd();</span><br><span class="line">		&#125;</span><br><span class="line">		else if(&quot;Benz&quot;.equals(Type))</span><br><span class="line">		&#123;</span><br><span class="line">			return new Benz();</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			return null;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//工厂2</span><br><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class CarFactory2</span><br><span class="line">&#123;</span><br><span class="line">	public static Car createAudi()</span><br><span class="line">	&#123;</span><br><span class="line">		return new Audi();</span><br><span class="line">	&#125;</span><br><span class="line">	public static Car createByd()</span><br><span class="line">	&#123;</span><br><span class="line">		return new Byd();</span><br><span class="line">	&#125;</span><br><span class="line">	public static Car createBenz()</span><br><span class="line">	&#123;</span><br><span class="line">		return new Benz();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//工厂3</span><br><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class CarFactory3</span><br><span class="line">&#123;</span><br><span class="line">	public static Car createCar(Class&lt;? extends Car&gt; cls)</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = null;</span><br><span class="line">		try</span><br><span class="line">		&#123;</span><br><span class="line">			car = (Car) Class.forName(cls.getName()).newInstance();</span><br><span class="line">		&#125; catch (InstantiationException e)</span><br><span class="line">		&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; catch (IllegalAccessException e)</span><br><span class="line">		&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; catch (ClassNotFoundException e)</span><br><span class="line">		&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		return car;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.simplefactory;</span><br><span class="line"></span><br><span class="line">public class Client</span><br><span class="line">&#123;</span><br><span class="line">	public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		test1();</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 测试CarFactory1</span><br><span class="line">	 */</span><br><span class="line">	public static void test1()</span><br><span class="line">	&#123;</span><br><span class="line">		Car c1 = CarFactory1.createCar(&quot;Audi&quot;);</span><br><span class="line">		Car c2 = CarFactory1.createCar(&quot;Byd&quot;);</span><br><span class="line">		Car c3 = CarFactory1.createCar(&quot;Benz&quot;);</span><br><span class="line">		c1.run();</span><br><span class="line">		c2.run();</span><br><span class="line">		c3.run();</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 测试CarFactory2</span><br><span class="line">	 */</span><br><span class="line">	public static void test2()</span><br><span class="line">	&#123;</span><br><span class="line">		Car c1 = CarFactory2.createAudi();</span><br><span class="line">		Car c2 = CarFactory2.createByd();</span><br><span class="line">		Car c3 = CarFactory2.createBenz();</span><br><span class="line">		c1.run();</span><br><span class="line">		c2.run();</span><br><span class="line">		c3.run();</span><br><span class="line">	&#125;</span><br><span class="line">	/**</span><br><span class="line">	 * 测试CarFactory3</span><br><span class="line">	 */</span><br><span class="line">	public static void test3()</span><br><span class="line">	&#123;</span><br><span class="line">		Car c1 = CarFactory3.createCar(Audi.class);</span><br><span class="line">		Car c2 = CarFactory3.createCar(Byd.class);</span><br><span class="line">		Car c3 = CarFactory3.createCar(Benz.class);</span><br><span class="line">		c1.run();</span><br><span class="line">		c2.run();</span><br><span class="line">		c3.run();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总结之前先了解下面向对象设计的基本原则：</p>
+<ul>
+<li>OCP（开闭原则，Open-Closed Principle）:一个软件的实体应当对扩展开放，对修改关闭。也就是说，对于一个已有软件，如果需要扩展，应当在不需修改已有代码的基础上进行。</li>
+<li>DIP（依赖倒转原则，Dependence Inversion Principle）要针对接口编程，不要针对实现编程。也就是说，对于不同层次的编程，高层次暴露给低层次。</li>
+<li>LOD（迪米特法则，Law of Demeter）:只与你直接的朋友通信，而避免与陌生人通信。也就是说，一个软件实体应当尽可能少的与其他实体发生相互作用。</li>
+</ul>
+<p>现在我们来谈谈简单工厂模式的优缺点：<br><br><strong>优点：</strong></p>
+<ul>
+<li>客户端与产品没有直接建立联系，即调用者没有直接依赖于被调用者，当Audi类Byd类修改后，不需要对其进行修改。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>每增加一种新型车，都要在工厂类中增加相应的创建业务逻辑，这显然是违背了开闭原则。</li>
+</ul>
+<p>虽然，我们在第三种方式中解决了简单工厂模式的缺点，不过还有一种方式来解决，那就是工厂方法了，注意工厂方法中没有静态方法。</p>
+<h2 id="工厂方法模式（Factory-Method）"><a href="#工厂方法模式（Factory-Method）" class="headerlink" title="工厂方法模式（Factory Method）"></a>工厂方法模式（Factory Method）</h2><h3 id="类图-1"><a href="#类图-1" class="headerlink" title="类图"></a>类图</h3><p><img src="/images/factory/2.png" alt=""></p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><p>产品接口：</p>
+<ul>
+<li>抽象产品角色：它是具体产品继承的父类或者是实现的接口。在java中一般有抽象类或者接口来实现。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public interface Car</span><br><span class="line">&#123;</span><br><span class="line">	void run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体产品类：</p>
+<ul>
+<li>具体产品角色：具体工厂角色所创建的对象就是此角色的实例。在java中由具体的类来实现。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class Audi implements Car</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;奥迪出发&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class Benz implements Car</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;奔驰出发&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class Byd implements Car</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;比亚迪出发&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工厂接口：</p>
+<ul>
+<li>抽象工厂角色： 这是工厂方法模式的核心，它与应用程序无关。是具体工厂角色必须实现的接口或者必须继承的父类。在java中它由抽象类或者接口来实现。 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.factorymethod;</span><br><span class="line">/**</span><br><span class="line"> * 工厂方法接口</span><br><span class="line"> * @author Match</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public interface CarFactory</span><br><span class="line">&#123;</span><br><span class="line">	Car createCar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体工厂类：</p>
+<ul>
+<li>具体工厂角色：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class AudiFactory implements CarFactory</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Car createCar()</span><br><span class="line">	&#123;</span><br><span class="line">		return new Audi();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class BenzFactory implements CarFactory</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Car createCar()</span><br><span class="line">	&#123;</span><br><span class="line">		return new Benz();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class BydFactory implements CarFactory</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Car createCar()</span><br><span class="line">	&#123;</span><br><span class="line">		return new Byd();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.factorymethod;</span><br><span class="line"></span><br><span class="line">public class Client</span><br><span class="line">&#123;</span><br><span class="line">	public static void main(String[] args)</span><br><span class="line">	&#123;</span><br><span class="line">		Car c1 = new AudiFactory().createCar();</span><br><span class="line">		Car c2 = new BydFactory().createCar();</span><br><span class="line">		Car c3 = new BenzFactory().createCar();</span><br><span class="line">		c1.run();</span><br><span class="line">		c2.run();</span><br><span class="line">		c3.run();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><h3 id="类图-2"><a href="#类图-2" class="headerlink" title="类图"></a>类图</h3><p><img src="http://img-blog.csdn.net/20171203154302476?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvRGluZ2RvbmdfTWF0Y2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><p>产品接口及具体产品类：</p>
+<ul>
+<li>抽象产品角色：它是具体产品继承的父类或者是实现的接口。</li>
+<li>具体产品角色：具体工厂角色所创建的对象就是此角色的实例。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//引擎</span><br><span class="line">package com.match.factory.abstractfactory;</span><br><span class="line"></span><br><span class="line">public interface Engine</span><br><span class="line">&#123;</span><br><span class="line">	void run();</span><br><span class="line">	void start();</span><br><span class="line">&#125;</span><br><span class="line">class LuxuryEngine implements Engine</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;转的快！&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void start()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;启动快！可以自动启停！&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">class LowEngine implements Engine</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void run()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;转的慢！&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void start()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;启动慢！&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//座椅</span><br><span class="line">package com.match.factory.abstractfactory;</span><br><span class="line"></span><br><span class="line">public interface Seat</span><br><span class="line">&#123;</span><br><span class="line">	void message();</span><br><span class="line">&#125;</span><br><span class="line">class LuxurySeat implements Seat</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void message()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;可以自动按摩！&quot;);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line">class LowSeat implements Seat</span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void message()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;不能按摩！&quot;);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//轮胎</span><br><span class="line">package com.match.factory.abstractfactory;</span><br><span class="line"></span><br><span class="line">public interface Tyre</span><br><span class="line">&#123;</span><br><span class="line">	void revolve();</span><br><span class="line">&#125;</span><br><span class="line">class LuxuryTyre implements Tyre</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void revolve()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;旋转不磨损！&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">class LowTyre implements Tyre</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void revolve()</span><br><span class="line">	&#123;</span><br><span class="line">		System.out.println(&quot;旋转磨损快！&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工厂接口：</p>
+<ul>
+<li>抽象工厂角色： 这是工厂方法模式的核心，它与应用程序无关。是具体工厂角色必须实现的接口或者必须继承的父类。在java中它由抽象类或者接口来实现。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.match.factory.abstractfactory;</span><br><span class="line"></span><br><span class="line">public interface CarFactory</span><br><span class="line">&#123;</span><br><span class="line">	Engine createEngine();</span><br><span class="line">	Seat createSeat();</span><br><span class="line">	Tyre createTyre();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体工厂类：</p>
+<ul>
+<li>具体工厂角色：它含有和具体业务逻辑有关的代码。由应用程序调用以创建对应的具体产品的对象。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//高级工厂</span><br><span class="line">package com.match.factory.abstractfactory;</span><br><span class="line"></span><br><span class="line">public class LuxuryCarFactory implements CarFactory </span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Engine createEngine()</span><br><span class="line">	&#123;</span><br><span class="line">		return new LuxuryEngine();</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public Seat createSeat()</span><br><span class="line">	&#123;</span><br><span class="line">		return new LuxurySeat();</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public Tyre createTyre()</span><br><span class="line">	&#123;</span><br><span class="line">		return new LuxuryTyre();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//低级工厂</span><br><span class="line">package com.match.factory.abstractfactory;</span><br><span class="line"></span><br><span class="line">public class LowCarFactory implements CarFactory </span><br><span class="line">&#123;</span><br><span class="line">	@Override</span><br><span class="line">	public Engine createEngine()</span><br><span class="line">	&#123;</span><br><span class="line">		return new LowEngine();</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public Seat createSeat()</span><br><span class="line">	&#123;</span><br><span class="line">		return new LowSeat();</span><br><span class="line">	&#125;</span><br><span class="line">	@Override</span><br><span class="line">	public Tyre createTyre()</span><br><span class="line">	&#123;</span><br><span class="line">		return new LowTyre();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象工厂与工厂方法的区别"><a href="#抽象工厂与工厂方法的区别" class="headerlink" title="抽象工厂与工厂方法的区别"></a>抽象工厂与工厂方法的区别</h2><p>两个慨念：</p>
+<ul>
+<li><strong>产品等级结构：产品等级结构即产品的继承结构。</strong><br>如一个抽象类是汽车，其子类有奥迪汽车、比亚迪汽车、奔驰汽车，则抽象汽车与具体品牌的汽车之间构成了一个产品等级结构，抽象汽车是父类，而具体品牌的汽车其子类。</li>
+<li><strong>产品族：在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品。</strong><br>如高配车工厂生产的高级引擎、高级座椅、高级轮胎，高级引擎位于引擎产品等级结构中，高级座椅位于座椅产品等级结构中，高级轮胎位于轮胎产品等级结构中。高级引擎、高级座椅、高级轮胎构成了一个产品族。</li>
+</ul>
+<p>抽象工厂模式是工厂方法模式的升级版本，他用来创建一组相关或者相互依赖的对象。他与工厂方法模式的区别就在于，工厂方法模式针对的是一个产品等级结构；而抽象工厂模式则是针对的多个产品等级结构。在编程中，通常一个产品结构，表现为一个接口或者抽象类，也就是说，工厂方法模式提供的所有产品都是衍生自同一个接口或抽象类，而抽象工厂模式所提供的产品则是衍生自不同的接口或抽象类。<br></p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>无论是简单工厂模式，工厂方法模式，还是抽象工厂模式，他们都属于工厂模式，在形式和特点上也是极为相似的，他们的最终目的都是为了解耦。所以，在使用工厂模式时，最应该关心降低耦合度的目的是否达到了。<br></p>
+<p><strong>简而言之，没有工厂的时候什么都要亲力亲为很麻烦，耦合度十分高，于是有了简单工厂。可简单工厂耦合度还是高所以有了工厂方法。耦合度问题是解决，突然又发现，工厂方法只能生产一种东西，也可以称之为一类东西，比如我这工厂只能造引擎，轮胎我造不了。于是就有了抽象工厂，抽象工厂就牛叉了，引擎我能造，轮胎我也能造，最后把车都给你造出来了，所有抽象工厂又叫工厂的工厂。</strong></p>
+
+        </section>
+    </article>
+    
+        <!-- disqus 评论框 start -->
+        <div class="comment">
+            <div id="disqus_thread" class="disqus-thread">
+              <i>加载评论框需要翻墙</i>
+            </div>
+        </div>
+        <!-- disqus 评论框 end -->
+    
+    
+        <!-- livere 评论框 start -->
+        <div class="comment">
+            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
+        </div>
+        <!-- livere 评论框 end -->
+        
+  </div>
+  <aside>
+    
+    <div class="toc-container">
+        <h1>目录</h1>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分类"><span class="toc-number">2.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三种模式的具体实现"><span class="toc-number">3.</span> <span class="toc-text">三种模式的具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单工厂模式（Simple-Factory）"><span class="toc-number">3.1.</span> <span class="toc-text">简单工厂模式（Simple Factory）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类图"><span class="toc-number">3.1.1.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-number">3.1.2.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">3.1.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工厂方法模式（Factory-Method）"><span class="toc-number">3.2.</span> <span class="toc-text">工厂方法模式（Factory Method）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类图-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象工厂模式"><span class="toc-number">3.3.</span> <span class="toc-text">抽象工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类图-2"><span class="toc-number">3.3.1.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-2"><span class="toc-number">3.3.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象工厂与工厂方法的区别"><span class="toc-number">3.4.</span> <span class="toc-text">抽象工厂与工厂方法的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-1"><span class="toc-number">3.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+        </div>
+    </div>
+    
+  </aside>
+</main>
+
+<!-- disqus 公共JS代码 -->
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = "dingdongmatch";
+  var disqus_identifier = "https://www.dingdongmatch.ml/2018/01/15/工厂模式（Factory Pattern）/";
+  var disqus_url = "https://www.dingdongmatch.ml/2018/01/15/工厂模式（Factory Pattern）/";
+
+  isAgent(getDisqus)
+
+  // determine user agent in China
+  function isAgent(cb) {
+    var url = '//graph.facebook.com/feed?callback=h';
+    var xhr = new XMLHttpRequest();
+    var called = false;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+      called = true;
+      cb(true);
+      }
+    };
+    xhr.send();
+    // timeout 1s, this facebook API is very fast.
+    setTimeout(function() {
+      if (!called) {
+      xhr.abort();
+      cb(false)
+      }
+    }, 1000);
+  }
+
+  function getDisqus(isAgent) {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
+    dsq.async = true
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
+  }
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+<script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2019 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>

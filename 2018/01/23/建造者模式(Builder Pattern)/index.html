@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang=zh-CN>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="傅大帅的个人博客">
+  <meta name="keywords" content="火柴">
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+    
+  <title>建造者模式（Builder Pattern） | 叮咚火柴的博客</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class="logo" href="/">
+      <span>叮咚火柴的博客</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id="post">
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>建造者模式（Builder Pattern）</h1>
+          <div class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018年01月23日</time>
+            
+            
+              | 
+                  <i class="fa fa-tags" aria-hidden="true"></i>
+                
+               
+  <a href="/tags/#学习笔记" class="tag">学习笔记</a>
+
+  <a href="/tags/#设计模式" class="tag">设计模式</a>
+
+
+            
+          </div>
+          <h1 id="什么是建造者模式？"><a href="#什么是建造者模式？" class="headerlink" title="什么是建造者模式？"></a>什么是建造者模式？</h1><p>建造者模式（Builder Pattern）将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。<br></p>
+<h1 id="建造模式的本质"><a href="#建造模式的本质" class="headerlink" title="建造模式的本质"></a>建造模式的本质</h1><ul>
+<li>分离了对象组件的单独构造（由Builder来负责）和装配（由Driector负责）。从而可以构造出复杂的对象。这个模式适用于：某个对象的构建过程复杂的情况下使用。</li>
+<li>由于实现了构建和装配的解耦。不同的构建器，相同的装配，也可以产生不同的对象；相同的构建器，不同的装配顺序也可以产生不同的对象。也就是实现了构建算法，装配算法的解耦，实现了更好的复用。</li>
+</ul>
+<h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><ul>
+<li>我们要建造一个复杂产品。比如：神舟飞船，Iphone。这个复杂产品的创建，有这样一个问题要处理：装配这些子组件是不是有个步骤问题？</li>
+<li>实际开发中，我们所要构建的对象十分复杂，有很多步骤需要处理时。</li>
+</ul>
+<h1 id="Java中的应用场景"><a href="#Java中的应用场景" class="headerlink" title="Java中的应用场景"></a>Java中的应用场景</h1><ul>
+<li>StringBuilder类的append方法</li>
+<li>SQL中的PreparedStatement</li>
+<li>JDOM中，DomeBuiler,SAXBuilder</li>
+</ul>
+<p>下面以建造神舟5号飞船说明，我们这里只是建造一个简单的神舟5号飞船了，它由发动机，逃逸塔，轨道舱组成，Builder负责构建这些组件，Driector负责将它们装配成神舟5号飞船。<br></p>
+<h1 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h1><p><img src="/images/builder/1.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Builder接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AirShipBuilder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="comment">//构建发动机</span></span><br><span class="line">	<span class="function">Engine <span class="title">builderEngine</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//构建轨道舱</span></span><br><span class="line">	<span class="function">OrbitalModule <span class="title">builderOrbitalModule</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//构建逃逸塔</span></span><br><span class="line">	<span class="function">EscapeTower <span class="title">builderEscapeTower</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Director接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AirShipDirector</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="comment">//组装飞船</span></span><br><span class="line">	<span class="function">AirShip <span class="title">directAirShip</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Builder类负责构造组件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AirShip_5Builder</span> <span class="keyword">implements</span> <span class="title">AirShipBuilder</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Engine <span class="title">builderEngine</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"建造发动机"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Engine(<span class="string">"神舟5号发动机"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> EscapeTower <span class="title">builderEscapeTower</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"建造逃逸塔"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> EscapeTower(<span class="string">"神舟5号逃逸塔"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> OrbitalModule <span class="title">builderOrbitalModule</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"建造轨道舱"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> OrbitalModule(<span class="string">"神舟5号轨道舱"</span>);</span><br><span class="line">	&#125;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Director类负责装配生产成品</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Airship_5Director</span> <span class="keyword">implements</span> <span class="title">AirShipDirector</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> AirShipBuilder builder;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Airship_5Director</span><span class="params">(AirShipBuilder builder)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.builder = builder;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> AirShip <span class="title">directAirShip</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Engine e = builder.builderEngine();</span><br><span class="line">		OrbitalModule o = builder.builderOrbitalModule();</span><br><span class="line">		EscapeTower et = builder.builderEscapeTower();</span><br><span class="line">		<span class="comment">//装配成飞船对象</span></span><br><span class="line">		AirShip ship = <span class="keyword">new</span> AirShip();</span><br><span class="line">		System.out.println(<span class="string">"装配"</span>+e.getName());</span><br><span class="line">		ship.setEngine(e);</span><br><span class="line">		System.out.println(<span class="string">"装配"</span>+et.getName());</span><br><span class="line">		ship.setEscapeTower(et);</span><br><span class="line">		System.out.println(<span class="string">"装配"</span>+o.getName());</span><br><span class="line">		ship.setOrbitalModule(o);</span><br><span class="line">		<span class="keyword">return</span> ship;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 发动机</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Engine</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Engine</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 逃逸塔</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EscapeTower</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">EscapeTower</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 轨道舱</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrbitalModule</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">OrbitalModule</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 飞船</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Match</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AirShip</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> OrbitalModule orbitalModule;<span class="comment">//轨道舱</span></span><br><span class="line">	<span class="keyword">private</span> Engine engine;<span class="comment">//发动机</span></span><br><span class="line">	<span class="keyword">private</span> EscapeTower escapeTower;<span class="comment">//逃逸塔</span></span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">launch</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"发射！"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> OrbitalModule <span class="title">getOrbitalModule</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> orbitalModule;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrbitalModule</span><span class="params">(OrbitalModule orbitalModule)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.orbitalModule = orbitalModule;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Engine <span class="title">getEngine</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> engine;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEngine</span><span class="params">(Engine engine)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.engine = engine;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> EscapeTower <span class="title">getEscapeTower</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> escapeTower;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEscapeTower</span><span class="params">(EscapeTower escapeTower)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.escapeTower = escapeTower;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试代码：</strong><br></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.match.builder;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		AirShipDirector director = <span class="keyword">new</span> Airship_5Director(<span class="keyword">new</span> AirShip_5Builder());</span><br><span class="line">		AirShip ship = director.directAirShip();</span><br><span class="line">		ship.launch();	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>控制台输出：</strong><br></p>
+<blockquote>
+<p>建造发动机<br><br>建造轨道舱<br><br>建造逃逸塔<br><br>装配神舟5号发动机<br><br>装配神舟5号逃逸塔<br><br>装配神舟5号轨道舱<br><br>发射！<br></p>
+</blockquote>
+
+        </section>
+    </article>
+    
+        <!-- disqus 评论框 start -->
+        <div class="comment">
+            <div id="disqus_thread" class="disqus-thread">
+              <i>加载评论框需要翻墙</i>
+            </div>
+        </div>
+        <!-- disqus 评论框 end -->
+    
+    
+        <!-- livere 评论框 start -->
+        <div class="comment">
+            <div id="lv-container" data-id="city" data-uid="your_livere_uid"></div>
+        </div>
+        <!-- livere 评论框 end -->
+        
+  </div>
+  <aside>
+    
+    <div class="toc-container">
+        <h1>目录</h1>
+        <div class="content">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是建造者模式？"><span class="toc-number">1.</span> <span class="toc-text">什么是建造者模式？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#建造模式的本质"><span class="toc-number">2.</span> <span class="toc-text">建造模式的本质</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用场景"><span class="toc-number">3.</span> <span class="toc-text">使用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java中的应用场景"><span class="toc-number">4.</span> <span class="toc-text">Java中的应用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#类图"><span class="toc-number">5.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">6.</span> <span class="toc-text">代码</span></a></li></ol>
+        </div>
+    </div>
+    
+  </aside>
+</main>
+
+<!-- disqus 公共JS代码 -->
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = "dingdongmatch";
+  var disqus_identifier = "https://www.dingdongmatch.ml/2018/01/23/建造者模式(Builder Pattern)/";
+  var disqus_url = "https://www.dingdongmatch.ml/2018/01/23/建造者模式(Builder Pattern)/";
+
+  isAgent(getDisqus)
+
+  // determine user agent in China
+  function isAgent(cb) {
+    var url = '//graph.facebook.com/feed?callback=h';
+    var xhr = new XMLHttpRequest();
+    var called = false;
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+      called = true;
+      cb(true);
+      }
+    };
+    xhr.send();
+    // timeout 1s, this facebook API is very fast.
+    setTimeout(function() {
+      if (!called) {
+      xhr.abort();
+      cb(false)
+      }
+    }, 1000);
+  }
+
+  function getDisqus(isAgent) {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; 
+    dsq.async = true
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq)
+  }
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+<script type="text/javascript">
+  (function(d, s) {
+      var j, e = d.getElementsByTagName(s)[0];
+
+      if (typeof LivereTower === 'function') { return; }
+
+      j = d.createElement(s);
+      j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2019 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>
